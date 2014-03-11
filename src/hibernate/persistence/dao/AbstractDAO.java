@@ -102,6 +102,7 @@ public abstract class AbstractDAO implements IDAO{
         }
     }
     
+    @Override
     public List list(Integer firstResult, Integer maxResults) throws Exception {
         try {
             session = HibernateUtil.getSessionFactory().openSession();

@@ -1,6 +1,8 @@
+import hibernate.persistence.dao.RoleDAO;
 import java.util.ArrayList;
 import hibernate.persistence.entities.User;
 import hibernate.persistence.dao.UserDAO;
+import hibernate.persistence.entities.Role;
 
 public class TestarPersistence {
  
@@ -16,6 +18,13 @@ public class TestarPersistence {
     
     private static void createUsers() throws Exception {
         System.out.println("Criando usuários...");
+        
+        //RoleDAO roledao = new RoleDAO();
+        //Role role1 = (Role) roledao.getNewInstance();
+        
+        //role1.setName("Regra 1");
+        //roledao.save(role1);
+        
         UserDAO dao = new UserDAO();
         User admin = (User) dao.getNewInstance();
         admin.setName("Administrador");

@@ -6,6 +6,7 @@ package hibernate.persistence.entities;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Table;
 import javax.persistence.Entity;
@@ -44,9 +45,12 @@ public class User implements Serializable {
     @Column(name = "name", nullable = false, unique = true)
     private String name;
     
-    @OneToMany(mappedBy = "User", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "User", targetEntity = Role.class, fetch = FetchType.LAZY, cascade = javax.persistence.CascadeType.ALL)
+    private List <Role> role;
+    
+    /*@OneToMany(mappedBy = "User", fetch = FetchType.LAZY)
     @Cascade(CascadeType.SAVE_UPDATE)
-    private Collection <Role> role;
+    private Collection <Role> role;*/
     
     public User(){
         setId(0);
