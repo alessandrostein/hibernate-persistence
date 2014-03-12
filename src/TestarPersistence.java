@@ -3,6 +3,8 @@ import java.util.ArrayList;
 import hibernate.persistence.entities.User;
 import hibernate.persistence.dao.UserDAO;
 import hibernate.persistence.entities.Role;
+import java.util.HashSet;
+import java.util.Set;
 
 public class TestarPersistence {
  
@@ -19,11 +21,15 @@ public class TestarPersistence {
     private static void createUsers() throws Exception {
         System.out.println("Criando usuários...");
         
-        //RoleDAO roledao = new RoleDAO();
-        //Role role1 = (Role) roledao.getNewInstance();
+        RoleDAO roledao = new RoleDAO();
+        Role role1 = (Role) roledao.getNewInstance();
+        Role role2 = (Role) roledao.getNewInstance();
         
-        //role1.setName("Regra 1");
-        //roledao.save(role1);
+        role1.setName("Regra 1");
+        roledao.save(role1);
+        
+        role2.setName("Regra 2");
+        roledao.save(role2);
         
         UserDAO dao = new UserDAO();
         User admin = (User) dao.getNewInstance();
@@ -35,9 +41,18 @@ public class TestarPersistence {
         User user = (User) dao.getNewInstance();
         user.setName("Ayrton Senna");
 
+        Set roles = new HashSet();
+        roles.add(role1);
+        roles.add(role2);
+        
+        user.setRole(roles);
+        admin.setRole(roles);
+        //guest.setRole(roles);
+        
+         dao.save(user);
         dao.save(admin);
         dao.save(guest);
-        dao.save(user);
+       
 
         System.out.print(" OK!");
 

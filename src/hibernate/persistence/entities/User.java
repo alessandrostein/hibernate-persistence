@@ -5,8 +5,8 @@
 package hibernate.persistence.entities;
 
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.List;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Table;
 import javax.persistence.Entity;
@@ -14,11 +14,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 
 /**
  *
@@ -45,12 +45,31 @@ public class User implements Serializable {
     @Column(name = "name", nullable = false, unique = true)
     private String name;
     
-    @OneToMany(mappedBy = "User", targetEntity = Role.class, fetch = FetchType.LAZY, cascade = javax.persistence.CascadeType.ALL)
-    private List <Role> role;
+    /*@OneToMany(fetch=FetchType.LAZY, targetEntity= Role.class, cascade= CascadeType.ALL)
+    @JoinColumn(name = "userrole_id", referencedColumnName="id")
     
-    /*@OneToMany(mappedBy = "User", fetch = FetchType.LAZY)
-    @Cascade(CascadeType.SAVE_UPDATE)
-    private Collection <Role> role;*/
+    private Set role;
+
+    public Set getRole() {
+	return role;
+    }
+    
+    public void setRole(Set role) {
+	this.role = role;
+    }*/
+    
+    @OneToMany(cascade=CascadeType.ALL)
+    @JoinTable(name="userrole", joinColumns={@JoinColumn(name="userid", referencedColumnName="id")}
+    , inverseJoinColumns={@JoinColumn(name="roleid", referencedColumnName="id")})
+    private Set<Role> roles;
+ 
+    Set getRole() {
+	return roles;
+    }
+    
+    public void setRole(Set role) {
+	this.roles = role;
+    }
     
     public User(){
         setId(0);
