@@ -12,7 +12,7 @@ public class TestarPersistence {
     public static void main(String[] args) {
         try {
             createUsersRoles();
-            showAllUser();
+            //showAllUser();
         } catch (Exception ex) {
             System.out.println("A tentativa de criar usuários falhou!/n... " + ex.getMessage());
         }
@@ -23,6 +23,8 @@ public class TestarPersistence {
         System.out.println("Criando regras...");
 
         RoleDAO roledao = new RoleDAO();
+        
+        roledao.removeAll();
         
         Role role1 = (Role) roledao.getNewInstance();
         role1.setName("Role 1");
@@ -36,6 +38,7 @@ public class TestarPersistence {
         System.out.println("Criando usuários...");
 
         UserDAO dao = new UserDAO();
+        dao.removeAll();
         
         User admin = (User) dao.getNewInstance();
         admin.setName("Administrador");
@@ -57,8 +60,11 @@ public class TestarPersistence {
         guest.setRole(roles);
 
         dao.save(user);
+        showAllUser();
         dao.save(admin);
+        showAllUser();
         dao.save(guest);
+        showAllUser();
 
         System.out.print(" OK!");
 
