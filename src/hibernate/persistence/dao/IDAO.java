@@ -4,7 +4,6 @@
  */
 package hibernate.persistence.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
