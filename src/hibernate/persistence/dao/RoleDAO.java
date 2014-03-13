@@ -5,12 +5,13 @@
 package hibernate.persistence.dao;
 
 import hibernate.persistence.entities.Role;
+import java.util.ArrayList;
 
 /**
  *
  * @author alessandro.stein
  */
-public class RoleDAO extends AbstractDAO{
+public class RoleDAO extends AbstractDAO implements IRoleDAO{
     
     @Override
     protected String getNamedQueryToFindAll() {
@@ -45,5 +46,12 @@ public class RoleDAO extends AbstractDAO{
     public Object getNewInstance() {
         return new Role();
     } 
+
+    
+    // Implementação da busca do usuario.
+    @Override
+    public ArrayList findUser(Role o) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }
