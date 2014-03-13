@@ -17,6 +17,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -45,39 +46,17 @@ public class User implements Serializable {
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
-    /*@OneToMany(fetch=FetchType.LAZY, targetEntity= Role.class, cascade= CascadeType.ALL)
-     @JoinColumn(name = "userrole_id", referencedColumnName="id")
-    
-     private Set role;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "userrole", joinColumns = {
+        @JoinColumn(name = "userid", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "roleid", referencedColumnName = "id")})
+    private Set<Role> roles;
 
-     public Set getRole() {
-     return role;
-     }
-    
-     public void setRole(Set role) {
-     this.role = role;
-     }*/
-    /*@OneToMany(cascade=CascadeType.ALL)
-     @JoinTable(name="userrole", joinColumns={@JoinColumn(name="userid", referencedColumnName="id")}
-     , inverseJoinColumns={@JoinColumn(name="roleid", referencedColumnName="id")})
-     private Set<Role> roles;
- 
-     Set getRole() {
-     return roles;
-     }
-    
-     public void setRole(Set role) {
-     this.roles = role;
-     }*/
-    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    //private Set<Role> roles;
-    private Collection<Role> roles;
-
-    Collection<Role> getRole() {
+    Set getRole() {
         return roles;
     }
 
-    public void setRole(Collection role) {
+    public void setRole(Set role) {
         this.roles = role;
     }
 
