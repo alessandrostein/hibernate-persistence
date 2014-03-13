@@ -2,6 +2,16 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/home/alessandrostein/gitrepo/hibernate-persistence/src/hibernate/persistence/dao/IDAO.java</file>
+            <file>file:/home/alessandrostein/gitrepo/hibernate-persistence/src/hibernate/persistence/entities/Role.java</file>
+            <file>file:/home/alessandrostein/gitrepo/hibernate-persistence/src/hibernate/persistence/dao/IUserDAO.java</file>
+            <file>file:/home/alessandrostein/gitrepo/hibernate-persistence/src/hibernate/persistence/dao/RoleDAO.java</file>
+            <file>file:/home/alessandrostein/gitrepo/hibernate-persistence/src/hibernate/persistence/dao/UserDAO.java</file>
+            <file>file:/home/alessandrostein/gitrepo/hibernate-persistence/src/hibernate/persistence/entities/User.java</file>
+            <file>file:/home/alessandrostein/gitrepo/hibernate-persistence/src/TestarPersistence.java</file>
+            <file>file:/home/alessandrostein/gitrepo/hibernate-persistence/src/hibernate/persistence/dao/IRoleDAO.java</file>
+            <file>file:/home/alessandrostein/gitrepo/hibernate-persistence/src/hibernate/persistence/dao/AbstractDAO.java</file>
+        </group>
     </open-files>
 </project-private>
