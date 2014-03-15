@@ -66,7 +66,7 @@ public class TestarPersistence {
         dao.save(guest);
         showAllUser();
         
-        //showUserRole(role2);
+        showUserRole(role2);
 
         System.out.print(" OK!");
 
@@ -74,8 +74,9 @@ public class TestarPersistence {
 
     public static void showUserRole(Role role) throws Exception {
         System.out.println("Listando regras do usuario...");
+        
         RoleDAO dao = new RoleDAO();
-        ArrayList users = (ArrayList) dao.findUser(role);
+        ArrayList users = (ArrayList) role.getUser();
         User o;
 
         for (int i = 0; i < users.size(); i++) {

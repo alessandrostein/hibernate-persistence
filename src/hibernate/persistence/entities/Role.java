@@ -27,7 +27,7 @@ import javax.persistence.Table;
     @NamedQuery(name = "role.id.equals", query = "SELECT o FROM Role o WHERE o.id=:id"),
     @NamedQuery(name = "role.name.equals", query = "SELECT o FROM Role o WHERE o.name=:name"),
     @NamedQuery(name = "role.find.all", query = "SELECT o FROM Role o"),
-    //@NamedQuery(name = "role.find.user", query = "SELECT o FROM roles o WHERE o.roleid = o.id"),
+  //  @NamedQuery(name = "role.find.user", query = "SELECT o FROM roles"),
     @NamedQuery(name = "role.count.all", query = "SELECT COUNT(o.id) FROM Role o"),
     @NamedQuery(name = "role.remove.all", query = "DELETE FROM Role o"),
     @NamedQuery(name = "role.find.range", query = "SELECT o FROM Role o WHERE o.id BETWEEN :minId AND :maxId")
@@ -42,7 +42,7 @@ public class Role implements Serializable {
     @Column(name = "name", nullable = false, unique = false)
     private String name;
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "roles")
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "roles")
     private Set<User> user;
 
     public Set<User> getUser() {

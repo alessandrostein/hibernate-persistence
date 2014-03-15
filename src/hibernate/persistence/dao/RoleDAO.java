@@ -59,6 +59,7 @@ public class RoleDAO extends AbstractDAO implements IRoleDAO {
     public List findUser(Role o) throws Exception {
         try {
             session = HibernateUtil.getSessionFactory().openSession();
+            
             session.beginTransaction();
             Query q = session.getNamedQuery(getNameQueryToFindUser());
             List lst = q.list();
