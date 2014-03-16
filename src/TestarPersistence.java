@@ -70,6 +70,16 @@ public class TestarPersistence {
         showAllUser();
         
         showUserRole(role1);
+        
+        System.out.print("Adicionando uma nova regra ao usuario");
+        dao.addRole(admin, role1);
+        showUserRole(role1);
+        
+        if (dao.hasRole(user, role2)){
+             System.out.print("O usuario " + user.getName() + "possui a regra " + role2.getName());
+        }else{
+            System.out.print("O usuario " + user.getName() + "NÃO possui a regra " + role2.getName()); 
+        }
 
         System.out.print(" OK!");
 

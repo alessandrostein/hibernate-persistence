@@ -16,12 +16,12 @@ import java.util.ArrayList;
  */
 public interface IUserDAO extends IDAO{
     
-    void addRole(User user, Role role);
+    void addRole(User user, Role role) throws Exception;
     
-    void removeRole(User user, Role role);
+    void removeRole(User user, Role role) throws Exception;
     
-    boolean hasRole(User user, Role role);
+    boolean hasRole(User user, Role role) throws Exception;
     
-    ArrayList findRole(User o);
+    ArrayList findRole(User o) throws Exception;
     
 }
