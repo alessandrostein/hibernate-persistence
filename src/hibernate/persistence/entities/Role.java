@@ -24,17 +24,6 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "role")
 
-/*
-Category category = em.find(Category.class, categoryId);
-return category.getBrands();
-If it's unidirectional, then you'll need a query, but it's much simpler that the one you tried:
-
-select b from Brand b inner join b.categoryCollection category 
-where category.id = :categoryId;
-
-
-
-*/
 @NamedQueries({
     @NamedQuery(name = "role.id.equals", query = "SELECT o FROM Role o WHERE o.id=:id"),
     @NamedQuery(name = "role.name.equals", query = "SELECT o FROM Role o WHERE o.name=:name"),
