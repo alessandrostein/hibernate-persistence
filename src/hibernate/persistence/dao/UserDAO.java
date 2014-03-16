@@ -65,11 +65,14 @@ public class UserDAO extends AbstractDAO implements IUserDAO {
     @Override
     public void addRole(User user, Role role) {
         try {
-            User user2 = (User) find(String.valueOf(user.getId()));
-            Set roles = user2.getRole();
-            roles.add(role);
-            user2.setRole((Set) roles);
-            update(user2);
+            if (hasRole(user, role) == true) {
+                User user2 = (User) find(String.valueOf(user.getId()));
+                Set roles = user2.getRole();
+                roles.add(role);
+                user2.setRole((Set) roles);
+                update(user2);
+            }
+
         } catch (Exception ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
