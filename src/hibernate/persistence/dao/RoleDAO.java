@@ -45,24 +45,25 @@ public class RoleDAO extends AbstractDAO implements IRoleDAO {
     protected String getNamedQueryToFindByRange() {
         return "role.find.range";
     }
-
+    
+    @Override
     public Object getNewInstance() {
         return new Role();
     }
     
-    protected String getNameQueryToFindUser() {
-        return "role.find.user";
-    }
 
     // Implementação da busca do usuario.
     @Override
     public List findUser(Role o) throws Exception {
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            UserDAO user = new UserDAO();
             
+            session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            Query q = session.getNamedQuery(getNameQueryToFindUser());
+            Query q = session.getNamedQuery(user.getNameQueryToFindUser());
+            q.setInteger("id", o.getID());
             List lst = q.list();
+            session.getTransaction().commit();
             return lst;
         } catch (HibernateException e) {
             throw new Exception(e.getCause().getMessage());

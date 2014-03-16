@@ -43,6 +43,10 @@ public class UserDAO extends AbstractDAO implements IUserDAO{
     protected String getNamedQueryToFindByRange() {
         return "user.find.range";
     }
+   
+    protected String getNameQueryToFindUser() {
+        return "user.find.role";
+    }
     
     public Object getNewInstance() {
         return new User();
