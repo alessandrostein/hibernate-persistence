@@ -56,6 +56,10 @@ public class UserDAO extends AbstractDAO implements IUserDAO {
     protected String getNameQueryToHasRole() {
         return "user.has.role";
     }
+    
+    protected String getNameQueryToHasRole() {
+        return "user.remove.role";
+    }
 
     public Object getNewInstance() {
         return new User();
@@ -81,7 +85,17 @@ public class UserDAO extends AbstractDAO implements IUserDAO {
 
     @Override
     public void removeRole(User user, Role role) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query q = session.getNamedQuery(getNamedQueryToRemoveRole());
+            q.setInteger("roleid", role.getId());
+            q.setInteger("userid", user.getId());
+            q.executeUpdate();
+        } catch (HibernateException e) {
+            throw new Exception(e.getCause().getMessage());
+        } finally {
+            releaseSession(session);
+        }       
     }
 
     @Override
@@ -107,7 +121,15 @@ public class UserDAO extends AbstractDAO implements IUserDAO {
 
     @Override
     public ArrayList findRole(User o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query q = session.getNamedQuery(getNamedQueryToFindRole());
+            q.setInteger("id", o.getId());
+            List lst = q.list();
+            return (ArrayList) lst;
+        } catch (HibernateException e) {
+            throw new Exception(e.getCause().getMessage());
+        }
     }
 
 }
