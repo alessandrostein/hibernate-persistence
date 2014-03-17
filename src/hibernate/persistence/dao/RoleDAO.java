@@ -5,7 +5,6 @@
 package hibernate.persistence.dao;
 
 import hibernate.persistence.entities.Role;
-import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
