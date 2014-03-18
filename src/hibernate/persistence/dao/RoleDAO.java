@@ -55,15 +55,7 @@ public class RoleDAO extends AbstractDAO implements IRoleDAO {
     @Override
     public List findUser(Role o) throws Exception {
         try {
-            UserDAO user = new UserDAO();
-            
-            session = HibernateUtil.getSessionFactory().openSession();
-            session.beginTransaction();
-            Query q = session.getNamedQuery(user.getNameQueryToFindUser());
-            q.setInteger("id", o.getID());
-            List lst = q.list();
-            session.getTransaction().commit();
-            return lst;
+            return (List) o.getUser();
         } catch (HibernateException e) {
             throw new Exception(e.getCause().getMessage());
         } finally {

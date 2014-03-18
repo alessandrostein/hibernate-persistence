@@ -11,7 +11,6 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.hibernate.HibernateException;
-import org.hibernate.Query;
 
 /**
  *
@@ -49,7 +48,7 @@ public class UserDAO extends AbstractDAO implements IUserDAO {
         return "user.find.range";
     }
 
-    protected String getNameQueryToFindUser() {
+    protected String getNameQueryToFindRole() {
         return "user.find.role";
     }
 
@@ -57,7 +56,7 @@ public class UserDAO extends AbstractDAO implements IUserDAO {
         return "user.has.role";
     }
     
-    protected String getNameQueryToHasRole() {
+    protected String getNameQueryToRemoveRole() {
         return "user.remove.role";
     }
 
@@ -84,13 +83,15 @@ public class UserDAO extends AbstractDAO implements IUserDAO {
     }
 
     @Override
-    public void removeRole(User user, Role role) {
+    public void removeRole(User user, Role role) throws Exception {
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            Query q = session.getNamedQuery(getNamedQueryToRemoveRole());
-            q.setInteger("roleid", role.getId());
-            q.setInteger("userid", user.getId());
-            q.executeUpdate();
+           if (hasRole(user, role) == true) {
+                User user2 = (User) find(String.valueOf(user.getId()));
+                Set roles = user2.getRole();
+                roles.remove(role);
+                user2.setRole(roles);
+                update(user2);
+            }
         } catch (HibernateException e) {
             throw new Exception(e.getCause().getMessage());
         } finally {
@@ -101,16 +102,9 @@ public class UserDAO extends AbstractDAO implements IUserDAO {
     @Override
     public boolean hasRole(User user, Role role) throws Exception {
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            Query q = session.getNamedQuery(getNameQueryToHasRole());
-            q.setInteger("roleid", role.getID());
-            q.setInteger("userid", user.getId());
-
-            if (q.uniqueResult() != null) {
-                return false;
-            } else {
-                return true;
-            }
+           User user2 = (User) find(String.valueOf(user.getId()));
+           Set roles = user2.getRole();
+           return roles.contains(role);
         } catch (HibernateException e) {
             throw new Exception(e.getCause().getMessage());
         } finally {
@@ -120,13 +114,9 @@ public class UserDAO extends AbstractDAO implements IUserDAO {
     }
 
     @Override
-    public ArrayList findRole(User o) {
+    public ArrayList findRole(User o) throws Exception {
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            Query q = session.getNamedQuery(getNamedQueryToFindRole());
-            q.setInteger("id", o.getId());
-            List lst = q.list();
-            return (ArrayList) lst;
+            return (ArrayList) o.getRole();
         } catch (HibernateException e) {
             throw new Exception(e.getCause().getMessage());
         }
