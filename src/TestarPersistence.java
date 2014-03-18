@@ -4,28 +4,37 @@ import java.util.ArrayList;
 import hibernate.persistence.entities.User;
 import hibernate.persistence.dao.UserDAO;
 import hibernate.persistence.entities.Role;
+import java.util.HashSet;
 import java.util.Set;
 
 public class TestarPersistence {
 
     public static void main(String[] args) {
         try {
-            User user = createUsers("User 1");
-            Role role = createRoles("Regra 1");
+            removeAllRoles();
+            removeAllUser();
             
-            createUsersRoles((Set) role, user);
+            User user = createUsers("User 1");
+            Role role1 = createRoles("Regra 1");
+            Role role2 = createRoles("Regra 2");
+            
+            Set role = new HashSet();
+            role.add(role1);
+            role.add(role2);
+            
+            createUsersRoles(role, user);
             
             showAllUser();
             showAllRole();
             showAllUserRole(user);
             
-            findUser(role);
+            findUser(role1);
             
-            addNewRole(user, role);
+            addNewRole(user, role1);
             
-            removeRole(role, user);
+            removeRole(role1, user);
             
-            hasRole(user, role);
+            hasRole(user, role2);
             
             findRoles(user);
         } catch (Exception ex) {
@@ -63,18 +72,7 @@ public class TestarPersistence {
         UserDAO dao = new UserDAO();
         
         user1.setRole(role1);
-        dao.save(user1);
-        
-        
-        
-        /*UserRoleDAO dao_userrole = new UserRoleDAO();
-        
-        System.out.println("Criando relacionamento...");
-        UserRole userrole1 = new UserRole();
-        userrole1.setRoleid(role1.getID());
-        userrole1.setUserid(user1.getId());
-        dao_userrole.save(userrole1);*/
-        
+        dao.update(user1);
     }
 
     private static void showAllUser() throws Exception {
@@ -106,11 +104,11 @@ public class TestarPersistence {
     private static void showAllUserRole(User user) throws Exception {
         System.out.println("Listando usuários e regras ...");
         
-        ArrayList userrole = (ArrayList) user.getRole();
+        Set userrole = user.getRole();
         Role role;
         
-        for (int i = 0; i < userrole.size(); i++){
-            role = (Role) userrole.get(i);
+        for (Object u: userrole){
+            role = (Role) u;
             System.out.println(role);
         }
     }
@@ -120,11 +118,11 @@ public class TestarPersistence {
         
         RoleDAO dao = new RoleDAO();
 
-        ArrayList userrole = (ArrayList) dao.findUser(role);
+        Set userrole = dao.findUser(role);
         User o;
 
-        for (int i = 0; i < userrole.size(); i++) {
-            o = (User) userrole.get(i);
+        for (Object u: userrole) {
+            o = (User) u;
             System.out.println(o);
         }
 
@@ -151,13 +149,23 @@ public class TestarPersistence {
     private static void findRoles(User user) throws Exception {
         System.out.println("Listando Regras dos usuários...");
         UserDAO dao = new UserDAO();
-        ArrayList role = (ArrayList) dao.findRole(user);
+        Set role = dao.findRole(user);
         Role o;
 
-        for (int i = 0; i < role.size(); i++) {
-            o = (Role) role.get(i);
+        for (Object u: role) {
+            o = (Role) u;
             System.out.println(o);
         }
+    }
+    
+    private static void removeAllUser() throws Exception {
+        UserDAO dao = new UserDAO();
+        dao.removeAll();
+    }
+    
+    private static void removeAllRoles() throws Exception {
+        RoleDAO dao = new RoleDAO();
+        dao.removeAll();
     }
     
 }

@@ -8,7 +8,7 @@ package hibernate.persistence.dao;
 
 import hibernate.persistence.entities.Role;
 import hibernate.persistence.entities.User;
-import java.util.ArrayList;
+import java.util.Set;
 
 /**
  *
@@ -22,6 +22,6 @@ public interface IUserDAO extends IDAO{
     
     boolean hasRole(User user, Role role) throws Exception;
     
-    ArrayList findRole(User o) throws Exception;
+    Set findRole(User o) throws Exception;
     
 }

@@ -114,9 +114,10 @@ public class UserDAO extends AbstractDAO implements IUserDAO {
     }
 
     @Override
-    public ArrayList findRole(User o) throws Exception {
+    public Set findRole(User o) throws Exception {
         try {
-            return (ArrayList) o.getRole();
+            User u = (User) find(String.valueOf(o.getId()));
+            return u.getRole();
         } catch (HibernateException e) {
             throw new Exception(e.getCause().getMessage());
         }

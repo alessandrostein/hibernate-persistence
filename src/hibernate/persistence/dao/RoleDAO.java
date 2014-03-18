@@ -6,8 +6,8 @@ package hibernate.persistence.dao;
 
 import hibernate.persistence.entities.Role;
 import java.util.List;
+import java.util.Set;
 import org.hibernate.HibernateException;
-import org.hibernate.Query;
 
 /**
  *
@@ -50,12 +50,12 @@ public class RoleDAO extends AbstractDAO implements IRoleDAO {
         return new Role();
     }
     
-
     // Implementação da busca do usuario.
     @Override
-    public List findUser(Role o) throws Exception {
+    public Set findUser(Role o) throws Exception {
         try {
-            return (List) o.getUser();
+            Role role = (Role) find(String.valueOf(o.getID()));
+            return role.getUser();
         } catch (HibernateException e) {
             throw new Exception(e.getCause().getMessage());
         } finally {
