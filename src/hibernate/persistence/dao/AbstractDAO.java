@@ -52,7 +52,6 @@ public abstract class AbstractDAO implements IDAO{
         }
     }
     
-
     @Override
     public void remove(Object o) throws Exception {
         try {

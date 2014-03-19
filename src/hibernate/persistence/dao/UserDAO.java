@@ -6,7 +6,6 @@ package hibernate.persistence.dao;
 
 import hibernate.persistence.entities.Role;
 import hibernate.persistence.entities.User;
-import java.util.ArrayList;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -46,18 +45,6 @@ public class UserDAO extends AbstractDAO implements IUserDAO {
     @Override
     protected String getNamedQueryToFindByRange() {
         return "user.find.range";
-    }
-
-    protected String getNameQueryToFindRole() {
-        return "user.find.role";
-    }
-
-    protected String getNameQueryToHasRole() {
-        return "user.has.role";
-    }
-    
-    protected String getNameQueryToRemoveRole() {
-        return "user.remove.role";
     }
 
     public Object getNewInstance() {

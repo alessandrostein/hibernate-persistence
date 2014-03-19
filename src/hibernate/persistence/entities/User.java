@@ -29,11 +29,8 @@ import javax.persistence.NamedQuery;
     @NamedQuery(name = "user.id.equals", query = "SELECT o FROM User o WHERE o.id=:id"),
     @NamedQuery(name = "user.name.equals", query = "SELECT o FROM User o WHERE o.name=:name"),
     @NamedQuery(name = "user.find.all", query = "SELECT o FROM User o"),
-    //@NamedQuery(name = "user.has.role", query = "SELECT o FROM User o inner join o.roles u WHERE u.id = :roleid and o.id = :userid" ),
-    //@NamedQuery(name = "user.find.role", query = "SELECT o FROM User o inner join o.roles u WHERE u.id = :id" ),
     @NamedQuery(name = "user.count.all", query = "SELECT COUNT(o.id) FROM User o"),
-    @NamedQuery(name = "user.remove.all", query = "DELETE FROM User"),// o inner join o.roles u WHERE u.id = :roleid and o.id = :userid"),
-    @NamedQuery(name = "user.remove.role", query = "DELETE FROM User o"),
+    @NamedQuery(name = "user.remove.all", query = "DELETE FROM User"),
     @NamedQuery(name = "user.find.range", query = "SELECT o FROM User o WHERE o.id BETWEEN :minId AND :maxId"),})
 
 public class User implements Serializable {
