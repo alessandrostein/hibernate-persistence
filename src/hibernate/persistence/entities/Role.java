@@ -6,6 +6,7 @@ package hibernate.persistence.entities;
 
 import java.io.Serializable;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -42,7 +43,7 @@ public class Role implements Serializable {
     @Column(name = "name", nullable = false, unique = false)
     private String name;
 
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "roles")
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "roles")
     private Set<User> user;
 
     public Set<User> getUser() {
