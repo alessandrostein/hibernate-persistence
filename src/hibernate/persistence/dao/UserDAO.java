@@ -72,12 +72,19 @@ public class UserDAO extends AbstractDAO implements IUserDAO {
     @Override
     public void removeRole(User user, Role role) throws Exception {
         try {
-           if (hasRole(user, role) == true) {
+           if (hasRole(user, role) == false) {
                 User user2 = (User) find(String.valueOf(user.getId()));
                 Set roles = user2.getRole();
-                roles.remove(role);
-                user2.setRole(roles);
-                update(user2);
+                
+                for (Object u: roles){
+                    Role r = (Role) u;
+                    if (r.getID() == role.getID()){
+                        roles.remove(u);
+                    }
+                }
+                
+                user.setRole(roles);
+                update(user);
             }
         } catch (HibernateException e) {
             throw new Exception(e.getCause().getMessage());
