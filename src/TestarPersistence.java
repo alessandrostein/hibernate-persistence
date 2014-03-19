@@ -11,7 +11,7 @@ public class TestarPersistence {
 
     public static void main(String[] args) {
         try {
-             long tempoInit = System.currentTimeMillis();
+            long tempoInit = System.currentTimeMillis();
 
             // Remove todas as regras;
             removeAllRoles();
@@ -43,9 +43,11 @@ public class TestarPersistence {
             hasRole(user, role2);
             // Busca as regras que o usuario possui.
             findRoles(user);
+            // Remove uma regra do usuario.
+            removeRole(role1, user);
             
             long tempoFinish = System.currentTimeMillis();
-            System.out.println("Tempo de execução = " +  (tempoFinish - tempoInit)/1000.0 + "s");
+            System.out.println("Tempo de execução = " + (tempoFinish - tempoInit) / 1000.0 + "s");
         } catch (Exception ex) {
             System.out.println("A tentativa de criar usuários falhou!/n... " + ex.getMessage());
         }

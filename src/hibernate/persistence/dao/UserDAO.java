@@ -55,12 +55,14 @@ public class UserDAO extends AbstractDAO implements IUserDAO {
     @Override
     public void addRole(User user, Role role) {
         try {
-            if (hasRole(user, role) == true) {
-                User user2 = (User) find(String.valueOf(user.getId()));
-                Set roles = user2.getRole();
-                roles.add(role);
-                user2.setRole((Set) roles);
-                update(user2);
+            if (hasRole(user, role) == false) {
+                session = HibernateUtil.getSessionFactory().openSession();
+                session.beginTransaction();
+                User usuario = (User) session.load(User.class, user.getId());
+                Role regra = (Role) session.load(Role.class, role.getID());
+                usuario.getRole().add(regra);
+                session.update(usuario);
+                session.getTransaction().commit();
             }
 
         } catch (Exception ex) {
@@ -72,33 +74,28 @@ public class UserDAO extends AbstractDAO implements IUserDAO {
     @Override
     public void removeRole(User user, Role role) throws Exception {
         try {
-           if (hasRole(user, role) == false) {
-                User user2 = (User) find(String.valueOf(user.getId()));
-                Set roles = user2.getRole();
-                
-                for (Object u: roles){
-                    Role r = (Role) u;
-                    if (r.getID() == role.getID()){
-                        roles.remove(u);
-                    }
-                }
-                
-                user.setRole(roles);
-                update(user);
+            if (hasRole(user, role) == false) {
+                session = HibernateUtil.getSessionFactory().openSession();
+                session.beginTransaction();
+                User usuario = (User) session.load(User.class, user.getId());
+                Role regra = (Role) session.load(Role.class, role.getID());
+                usuario.getRole().remove(regra);
+                session.update(usuario);
+                session.getTransaction().commit();
             }
         } catch (HibernateException e) {
             throw new Exception(e.getCause().getMessage());
         } finally {
             releaseSession(session);
-        }       
+        }
     }
 
     @Override
     public boolean hasRole(User user, Role role) throws Exception {
         try {
-           User user2 = (User) find(String.valueOf(user.getId()));
-           Set roles = user2.getRole();
-           return roles.contains(role);
+            User user2 = (User) find(String.valueOf(user.getId()));
+            Set roles = user2.getRole();
+            return roles.contains(role);
         } catch (HibernateException e) {
             throw new Exception(e.getCause().getMessage());
         } finally {
